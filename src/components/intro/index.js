@@ -1,5 +1,8 @@
 import React from "react";
 const Intro = ({
     asType,
-}) => <div style={{color: 'red'}}>{`${asType} is coming`}</div>;
+    tbkt,
+    changeValue,
+    resetLoading,
+}) => <div style={{color: 'red', display: tbkt !== 'F' ? 'none' : 'block'}} onClick={resetLoading}>{`${asType} ${tbkt} is coming`}</div>;
 export default Intro;

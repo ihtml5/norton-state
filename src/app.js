@@ -1,14 +1,21 @@
 import React, { Component } from "react";
-import { Provider } from "./context";
+import NotronProvider  from "./provider";
 import { IntroCon } from "./modules";
 
 class ScalpelApp extends Component {
+  constructor(props) {
+    super(props);
+    this._forceUpdate = this._forceUpdate.bind(this);
+  }
+  _forceUpdate () {
+    this.forceUpdate();
+  }
   render() {
-    const { data } = this.props;
+    const { store } = this.props;
     return (
-      <Provider value={data}>
+      <NotronProvider store={Object.assign(store, {_forceUpdate: this._forceUpdate})}>
           <IntroCon type="mobile" />
-      </Provider>
+      </NotronProvider>
     );
   }
 }
