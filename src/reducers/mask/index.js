@@ -8,7 +8,6 @@ const setMASK = (
   action,
 ) => {
   const { type } = action;
-  console.log('');
   switch (type) {
     case MASKHIDE:
       return {

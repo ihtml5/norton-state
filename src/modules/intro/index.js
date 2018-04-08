@@ -3,19 +3,20 @@ import { Intro } from "../../components";
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    msg: state.msg,
-    asType: state.asType || "norton-state",
-    changeValue: state.changeValue,
-    tbkt: state.tbkt,
-    loading: state.loading,
+    loading: state.loading.show,
+    mask: state.mask.show
   };
 };
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     resetLoading: () => {
-      alert('LOADING/SHOW');
       dispatch({
         type: 'LOADING/SHOW',
+      })
+    },
+    doLoading: () => {
+      dispatch({
+        type: 'LOADING/HIDE',
       })
     },
   }

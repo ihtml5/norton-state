@@ -13,12 +13,12 @@ const setLoading = (
     case LOADINGHIDE:
       return {
         ...state,
-        show: false,
+        show: true,
       };
     case LOADINGSHOW:
       return {
         ...state,
-        show: true,
+        show: false,
       };
     default:
       return state;

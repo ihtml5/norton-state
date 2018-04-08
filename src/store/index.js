@@ -1,3 +1,5 @@
+import ActionTypes from '../constants/ActionTypes';
+
 const createStore = (reducer, initialState) => {
     let currentState = initialState;
     let currentReducer = reducer;
@@ -46,6 +48,9 @@ const createStore = (reducer, initialState) => {
             nextListeners.splice(index, 1);
         };
     };
+    dispatch({
+        type: ActionTypes.INIT,
+    });
     return {
         dispatch,
         subscribe,
