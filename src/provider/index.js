@@ -1,38 +1,43 @@
 import React, { Component } from 'react';
 import { Provider } from '../context';
-class NotronProvider extends Component {
-  constructor(props) {
+
+export const createProvider = (storeKey = '_store') => {
+  class NotronProvider extends Component {
+    constructor(props) {
       super(props);
       this.state = {
-          store: props.store,
+        [storeKey]: props.store,
       };
-  }
-  componentDidMount() {
+    }
+    componentDidMount() {
       const { store } = this.props;
-      this._previousState = store.getState();
+      this[storeKey] = store.getState();
       this._subscribe = store.subscribe(() => this.update());
-  }
-  componentWillUnmount() {
+    }
+    componentWillUnmount() {
       this._subscribe.unsubscribe();
-  }
-  update() {
+    }
+    update() {
       const { store } = this.props;
-      if (store.getState() !== this._previousState) {
-          this.setState({
-              store: {
-                  ...store,
-                  isChanged: true,
-              }
-          }, () => {
-              this._previousState = this.state.store.getState();
-          })
+      if (store.getState() !== this[storeKey]) {
+        this.setState(
+          {
+            [storeKey]: {
+              ...store,
+            },
+          },
+          () => {
+            this[storeKey] = this.state[storeKey].getState();
+          },
+        );
       }
+    }
+    render() {
+      const { children } = this.props;
+      return <Provider value={this.state[storeKey]}>{children}</Provider>;
+    }
   }
-  render() {
-    const { children } = this.props;
-    const { store } = this.state;
-    return <Provider value={store}>{children}</Provider>;
-  }
-}
+  return NotronProvider;
+};
 
-export default NotronProvider;
+export default createProvider();

@@ -6,7 +6,8 @@ const createStore = (reducer, initialState) => {
     let currentListeners = [];
     let nextListeners = currentListeners;
     let isDispatching = false;
-    console.log('currentState::::===', currentState);
+
+    // 确保事件能够被全部正确执行
     const ensureCanMutateNextListeners = () => {
         if (nextListeners === currentListeners) {
             nextListeners = currentListeners.slice();
@@ -34,6 +35,7 @@ const createStore = (reducer, initialState) => {
         }
         return action;
     };
+    
     const subscribe = (listener) => {
         let isSubscribed = true;
         ensureCanMutateNextListeners();
